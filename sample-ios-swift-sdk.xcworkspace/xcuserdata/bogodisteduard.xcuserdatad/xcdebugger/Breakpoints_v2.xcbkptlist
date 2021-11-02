@@ -3,4 +3,54 @@
    uuid = "5D964A16-363E-467E-A7AE-A02B5CC02B75"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "387D0295-906F-4B23-BBE1-13FA0FBF472D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/PayBoxSdk/PayBoxSdk/view/PaymentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "loadUrl(urlStr:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "387D0295-906F-4B23-BBE1-13FA0FBF472D - 23e39758ecfc1c91"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PayBoxSdk.PaymentView.loadUrl(urlStr: Swift.String) -&gt; ()"
+                  moduleName = "PayBoxSdk"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bogodisteduard/Desktop/sample-ios-swift-sdk/Pods/PayBoxSdk/PayBoxSdk/view/PaymentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "360">
+               </Location>
+               <Location
+                  uuid = "387D0295-906F-4B23-BBE1-13FA0FBF472D - 23e39758ecfc1c91"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PayBoxSdk.PaymentView.loadUrl(urlStr: Swift.String) -&gt; ()"
+                  moduleName = "PayBoxSdk"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bogodisteduard/Desktop/sample-ios-swift-sdk/Pods/PayBoxSdk/PayBoxSdk/view/PaymentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "404">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

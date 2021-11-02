@@ -104,7 +104,7 @@ class ViewController: UIViewController, WebDelegate {
         //Тестовый режим:
         sdk.config().testMode(enabled: true) // По умолчанию тестовый режим включен
         //Выбор платежной системы:
-        sdk.config().setPaymentSystem(paymentSystem: .EPAYWEBKZT)
+        sdk.config().setPaymentSystem(paymentSystem: .NONE)
         //Выбор валюты платежа:
         sdk.config().setCurrencyCode(code: "KZT")
         //Активация автоклиринга:
@@ -112,7 +112,7 @@ class ViewController: UIViewController, WebDelegate {
         //Установка кодировки:
         sdk.config().setEncoding(encoding: "UTF-8") // по умолчанию UTF-8
         //Время жизни рекурентного профиля:
-        sdk.config().setRecurringLifetime(lifetime: 36) //по умолчанию 36 месяцев
+        sdk.config().setRecurringLifetime(lifetime: 0) //по умолчанию 0 месяцев
         //Время жизни платежной страницы, в течение которого платеж должен быть завершен:
         sdk.config().setPaymentLifetime(lifetime: 300)  //по умолчанию 300 секунд
         //Включение режима рекурентного платежа:
