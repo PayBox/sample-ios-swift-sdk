@@ -130,6 +130,9 @@ class ViewController: UIViewController, WebDelegate {
         sdk.config().setClearingUrl(url: "url")
         sdk.config().setRequestMethod(requestMethod: .POST)
         
+        //Для отображения Frame вместо платежной страницы
+        sdk.config().setFrameRequired(isRequired: true) //false по умолчанию
+        
         //Передайте экземпляр paymentView в sdk:
         sdk.setPaymentView(paymentView: paymentView)
         
@@ -219,6 +222,8 @@ class ViewController: UIViewController, WebDelegate {
         sdk.createPayment(amount: amount, description: description, orderId: orderId, userId: userId, extraParams: nil) {
                     payment, error in {
                         self.resultLabel.text = "PaymentID: \(payment?.paymentId ?? 0)"
+                        self.paymentView.isHidden = true
+                        self.toolBar.isHidden = true
                     }()
             }
     }
