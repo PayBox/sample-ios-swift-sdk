@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   PayBoxSdk:
-    :commit: 91fd7481ae5e0d8fc5ef79925c89629ee67261a0
+    :commit: 8b13b80c641a2cf0662bcab05cd259df6daf53d5
     :git: https://github.com/PayBox/SDK_iOS-input-.git
     :submodules: true
 
@@ -20,4 +20,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 02567fb72a2e1706584fd35caa0867668a3d90db
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

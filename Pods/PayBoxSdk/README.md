@@ -90,7 +90,7 @@ PayBox SDK iOS - это библиотека позволяющая упрост
 
 *Время жизни рекурентного профиля:*
 ```
-    sdk.config().setRecurringLifetime(lifetime: 36) //по умолчанию 36 месяцев
+    sdk.config().setRecurringLifetime(lifetime: 36) //по умолчанию 0 месяцев (параметр исключается из списка при значении 0)
 ```
 
 *Время жизни платежной страницы, в течение которого платеж должен быть завершен:*
@@ -127,6 +127,11 @@ PayBox SDK iOS - это библиотека позволяющая упрост
     sdk.config().setRequestMethod(requestMethod: requestMethod)
 ```
 
+*Для отображения Frame вместо платежной страницы:*
+```
+    sdk.config().setFrameRequired(isRequired: true) //false по умолчанию
+```
+        
 
 # **Работа с SDK**
 
