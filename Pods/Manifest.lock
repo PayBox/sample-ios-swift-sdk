@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   PayBoxSdk:
-    :commit: 8b13b80c641a2cf0662bcab05cd259df6daf53d5
+    :commit: ca6d73765865273f5d7d72e90e8c73f0f22646cd
     :git: https://github.com/PayBox/SDK_iOS-input-.git
     :submodules: true
 

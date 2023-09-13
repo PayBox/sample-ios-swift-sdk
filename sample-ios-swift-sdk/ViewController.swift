@@ -40,6 +40,22 @@ class ViewController: UIViewController, WebDelegate {
         return button
     }()
     
+    lazy var initDirectPayButton: UIButton! = {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.frame = CGRect.zero
+        button.setTitle("Безакцептный платеж", for: .normal)
+        button.clipsToBounds = true
+        button.contentEdgeInsets = UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10)
+        button.backgroundColor = UIColor.systemBlue
+        button.layer.cornerRadius = 25
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.systemBlue.cgColor
+        
+        
+        return button
+    }()
+    
     lazy var cardListButton: UIButton! = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -103,6 +119,8 @@ class ViewController: UIViewController, WebDelegate {
         
         //Тестовый режим:
         sdk.config().testMode(enabled: true) // По умолчанию тестовый режим включен
+        //Выбор региона
+        sdk.config().setRegion(region: .DEFAULT) // .DEAFAULT по умолчанию
         //Выбор платежной системы:
         sdk.config().setPaymentSystem(paymentSystem: .NONE)
         //Выбор валюты платежа:
@@ -161,6 +179,7 @@ class ViewController: UIViewController, WebDelegate {
         
         self.view.addSubview(toolBar)
         self.view.addSubview(initPayButton)
+        self.view.addSubview(initDirectPayButton)
         self.view.addSubview(cardListButton)
         self.view.addSubview(addCardButton)
         self.view.addSubview(deleteCardButton)
@@ -179,8 +198,13 @@ class ViewController: UIViewController, WebDelegate {
             initPayButton.widthAnchor.constraint(equalToConstant: 250),
             initPayButton.heightAnchor.constraint(equalToConstant: 50),
             
+            initDirectPayButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            initDirectPayButton.topAnchor.constraint(equalTo: initPayButton.bottomAnchor, constant: 30),
+            initDirectPayButton.widthAnchor.constraint(equalToConstant: 250),
+            initDirectPayButton.heightAnchor.constraint(equalToConstant: 50),
+            
             cardListButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            cardListButton.topAnchor.constraint(equalTo: initPayButton.bottomAnchor, constant: 30),
+            cardListButton.topAnchor.constraint(equalTo: initDirectPayButton.bottomAnchor, constant: 30),
             cardListButton.widthAnchor.constraint(equalToConstant: 250),
             cardListButton.heightAnchor.constraint(equalToConstant: 50),
             
@@ -199,6 +223,7 @@ class ViewController: UIViewController, WebDelegate {
         ])
         
         initPayButton.addTarget(self, action: #selector(self.initPay(_:)), for: .touchUpInside)
+        initDirectPayButton.addTarget(self, action: #selector(self.initDirectPay(_:)), for: .touchUpInside)
         cardListButton.addTarget(self, action: #selector(self.showAllCards(_:)), for: .touchUpInside)
         addCardButton.addTarget(self, action: #selector(self.addCard(_:)), for: .touchUpInside)
         deleteCardButton.addTarget(self, action: #selector(self.deleteCard(_:)), for: .touchUpInside)
@@ -226,6 +251,31 @@ class ViewController: UIViewController, WebDelegate {
                         self.toolBar.isHidden = true
                     }()
             }
+    }
+    
+    //Создание безакцептного платежа:
+    @objc func initDirectPay(_: AnyObject) {
+        let amount: Float = 100
+        let userId = "1234"
+        let description = "some description"
+        let orderId = "1234"
+        let cardToken = "card_token"
+        
+        sdk.createCardPayment(amount: amount, userId: userId, cardToken: cardToken, description: description, orderId: orderId, extraParams: nil) {
+            payment, error in {
+                self.resultLabel.text = "PaymentID: \(payment?.paymentId ?? 0)"
+                
+                self.sdk.createNonAcceptancePayment(paymentId: payment?.paymentId ?? 0) {
+                            payment, error2 in {
+                                if let directError = error2 {
+                                    self.resultLabel.text = "Error: \(error2?.errorCode ?? 0) \(error2?.description ?? "")"
+                                } else if let directPay = payment {
+                                    self.resultLabel.text = "PaymentID: \(payment?.paymentId ?? 0) \(payment?.status ?? "nil")"
+                                }
+                            }()
+                    }
+            }()
+        }
     }
     
     //Получить список сохраненых карт:
