@@ -3,12 +3,24 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "PayboxSdk.onPaymentInited(payment:error:):PayboxSdk.swift">
+         contextName = "ApiHelper.resolveResponse(result:paymentType:):ApiHelper.swift">
          <PersistentStrings>
             <PersistentString
-               value = "payment?.redirectUrl ?? &quot;&quot;">
+               value = "(result.response as String).contains(Params.DATA)">
+            </PersistentString>
+            <PersistentString
+               value = "let errorParsed = result.response.getApplePaymentError()">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #1 in closure #1 in closure #1 in ViewController.finishApplePayPayment(tokenData:handler:):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "String.getPayment():ApiHelper.swift">
+      </ContextState>
+      <ContextState
+         contextName = "PayboxSdk.confirmApplePayment(url:params:paymentPaid:):PayboxSdk.swift">
       </ContextState>
       <ContextState
          contextName = "closure #2 in ApiHelper.connection(requestData:connection:):ApiHelper.swift">
@@ -19,13 +31,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ApiHelper.connection(requestData:connection:):ApiHelper.swift">
-      </ContextState>
-      <ContextState
-         contextName = "String.getPayment():ApiHelper.swift">
-      </ContextState>
-      <ContextState
          contextName = "closure #1 in closure #1 in ViewController.initDirectPay(_:):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ApiHelper.connection(requestData:connection:):ApiHelper.swift">
       </ContextState>
       <ContextState
          contextName = "closure #1 in closure #1 in closure #1 in closure #1 in ViewController.initDirectPay(_:):ViewController.swift">
@@ -34,6 +43,31 @@
                value = "let error = error">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PayboxSdk.onPaymentInited(payment:error:):PayboxSdk.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "payment?.redirectUrl ?? &quot;&quot;">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.paymentAuthorizationController(_:didAuthorizePayment:handler:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "paymentData?[&quot;header&quot;] as! [String: Any]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PayboxSdk.confirmApplePayment(url:token:paymentPaid:):PayboxSdk.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #1 in closure #1 in closure #1 in ViewController.finishApplePayPayment(params:handler:):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.viewDidLoad():ViewController.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

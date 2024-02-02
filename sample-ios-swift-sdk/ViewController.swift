@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import PassKit
 import PayBoxSdk
 
-class ViewController: UIViewController, WebDelegate {
+class ViewController: UIViewController, WebDelegate, PKPaymentAuthorizationControllerDelegate {
     
     var toolBar: UIToolbar!
 
@@ -104,6 +105,20 @@ class ViewController: UIViewController, WebDelegate {
         return button
     }()
     
+    lazy var applePayButton: UIButton! = {
+        let button = PKPaymentButton(paymentButtonType: .plain, paymentButtonStyle: .black)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.frame = CGRect.zero
+        button.clipsToBounds = true
+        button.contentEdgeInsets = UIEdgeInsets(top: 0,left: 10,bottom: 0,right: 10)
+        button.backgroundColor = UIColor.black
+        button.layer.cornerRadius = 25
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+        
+        return button
+    }()
+    
     lazy var resultLabel: UILabel! = {
         let label = UILabel()
         label.frame = CGRect(x: 10, y: self.view.frame.size.height - 300, width: self.view.frame.size.width - 20, height: 300)
@@ -183,6 +198,7 @@ class ViewController: UIViewController, WebDelegate {
         self.view.addSubview(cardListButton)
         self.view.addSubview(addCardButton)
         self.view.addSubview(deleteCardButton)
+        self.view.addSubview(applePayButton)
         self.view.addSubview(resultLabel)
         self.view.addSubview(paymentView)
         
@@ -218,6 +234,11 @@ class ViewController: UIViewController, WebDelegate {
             deleteCardButton.widthAnchor.constraint(equalToConstant: 250),
             deleteCardButton.heightAnchor.constraint(equalToConstant: 50),
             
+            applePayButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            applePayButton.topAnchor.constraint(equalTo: deleteCardButton.bottomAnchor, constant: 30),
+            applePayButton.widthAnchor.constraint(equalToConstant: 250),
+            applePayButton.heightAnchor.constraint(equalToConstant: 50),
+            
             resultLabel.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: 0),
             resultLabel.heightAnchor.constraint(equalToConstant: 300),
         ])
@@ -227,6 +248,11 @@ class ViewController: UIViewController, WebDelegate {
         cardListButton.addTarget(self, action: #selector(self.showAllCards(_:)), for: .touchUpInside)
         addCardButton.addTarget(self, action: #selector(self.addCard(_:)), for: .touchUpInside)
         deleteCardButton.addTarget(self, action: #selector(self.deleteCard(_:)), for: .touchUpInside)
+        applePayButton.addTarget(self, action: #selector(self.initApplePay(_:)), for: .touchUpInside)
+        
+    
+        let applePayStatus = applePayStatus()
+        applePayButton.isHidden = !applePayStatus.canMakePayments
     }
     
     @objc func hideView(_: AnyObject) {
@@ -251,6 +277,64 @@ class ViewController: UIViewController, WebDelegate {
                         self.toolBar.isHidden = true
                     }()
             }
+    }
+    
+    //Создание Apple Pay платежа и его подтверждение
+    func finishApplePayPayment(tokenData: Data, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        let amount: Float = 5
+        let description = "some description"
+        let orderId = "1234"
+        let userId = "1234"
+        
+        sdk.createApplePayment(amount: amount, description: description, orderId: orderId, userId: userId, extraParams: nil) {
+                    paymentId, error in {
+                        self.sdk.confirmApplePayment(paymentId: paymentId ?? "", tokenData: tokenData) {
+                            confirmPayment, confirmError in {
+                                if let directError = confirmError {
+                                    completion(PKPaymentAuthorizationResult(status: .failure, errors: nil))
+                                
+                                    self.resultLabel.text = "Error: \(directError.errorCode) \(directError.description)"
+                                } else if let directPay = confirmPayment {
+                                    completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+                                    
+                                    self.resultLabel.text = "PaymentID: \(directPay.paymentId ?? 0) \(directPay.status ?? "nil")"
+                                }
+                            }()
+                        }
+                    }()
+            }
+    }
+    
+    // Настройка и отображение контроллера Apple Pay
+    @objc func initApplePay(_: AnyObject) {
+        // Товары в корзине
+        let item1 = PKPaymentSummaryItem(label: "Item 1", amount: NSDecimalNumber(string: "4.00"), type: .final)
+        let item2 = PKPaymentSummaryItem(label: "Item 2", amount: NSDecimalNumber(string: "1.00"), type: .final)
+        
+        // Наименование магазина и итоговая цена
+        let total = PKPaymentSummaryItem(label: "Your company name", amount: NSDecimalNumber(string: "5.00"), type: .final)
+        
+        let paymentSummaryItems = [item1, item2, total]
+        
+        // Подготовка запроса оплаты Apple Pay
+        let paymentRequest = PKPaymentRequest()
+        paymentRequest.paymentSummaryItems = paymentSummaryItems
+        paymentRequest.merchantIdentifier = "your_merchant_identifier" // заменить на актуальный MerchantID из консоли разработчика Apple
+        paymentRequest.merchantCapabilities = .threeDSecure
+        paymentRequest.countryCode = "KZ"
+        paymentRequest.currencyCode = "KZT"
+        paymentRequest.supportedNetworks = supportedNetworks
+        
+        // Отображение контроллера Apple Pay
+        let paymentController = PKPaymentAuthorizationController(paymentRequest: paymentRequest)
+        paymentController.delegate = self
+        paymentController.present(completion: { (presented: Bool) in
+            if presented {
+                debugPrint("Presented payment controller")
+            } else {
+                debugPrint("Failed to present payment controller")
+            }
+        })
     }
     
     //Создание безакцептного платежа:
@@ -330,6 +414,29 @@ class ViewController: UIViewController, WebDelegate {
     
     func loadFinished() {
         self.resultLabel.text = ""
+    }
+    
+    //Список поддерживаемых МПС
+    let supportedNetworks: [PKPaymentNetwork] = [
+        .masterCard,
+        .visa
+    ]
+    
+    //Проверка статуса Apple Pay
+    func applePayStatus() -> (canMakePayments: Bool, canSetupCards: Bool) {
+        return (PKPaymentAuthorizationController.canMakePayments(),
+                PKPaymentAuthorizationController.canMakePayments(usingNetworks: supportedNetworks))
+    }
+    
+    //Скрываем контроллер Apple Pay самостоятельно
+    func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
+        controller.dismiss()
+    }
+    
+    
+    //Получаем токен от Apple Pay и передаем в SDK
+    func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        finishApplePayPayment(tokenData: payment.token.paymentData, handler: completion)
     }
 }
 
