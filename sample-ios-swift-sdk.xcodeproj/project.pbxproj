@@ -18,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		1018197D30AFF2404982D649 /* Pods-sample-ios-swift-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sample-ios-swift-sdk.release.xcconfig"; path = "Target Support Files/Pods-sample-ios-swift-sdk/Pods-sample-ios-swift-sdk.release.xcconfig"; sourceTree = "<group>"; };
+		68BB5FB72B4D6C3F005A35A7 /* sample-ios-swift-sdk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "sample-ios-swift-sdk.entitlements"; sourceTree = "<group>"; };
 		9B109A9EFAE6936336E42027 /* Pods-sample-ios-swift-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sample-ios-swift-sdk.debug.xcconfig"; path = "Target Support Files/Pods-sample-ios-swift-sdk/Pods-sample-ios-swift-sdk.debug.xcconfig"; sourceTree = "<group>"; };
 		9CD41B5A7101ADB2293AC62F /* Pods_sample_ios_swift_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sample_ios_swift_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0CF5F85272AA660009D6440 /* sample-ios-swift-sdk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sample-ios-swift-sdk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +64,7 @@
 		C0CF5F87272AA660009D6440 /* sample-ios-swift-sdk */ = {
 			isa = PBXGroup;
 			children = (
+				68BB5FB72B4D6C3F005A35A7 /* sample-ios-swift-sdk.entitlements */,
 				C0CF5F88272AA660009D6440 /* AppDelegate.swift */,
 				C0CF5F8A272AA660009D6440 /* SceneDelegate.swift */,
 				C0CF5F8C272AA660009D6440 /* ViewController.swift */,
@@ -356,6 +358,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "sample-ios-swift-sdk/sample-ios-swift-sdk.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9TD9U28A38;
@@ -366,7 +369,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -386,6 +389,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "sample-ios-swift-sdk/sample-ios-swift-sdk.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9TD9U28A38;
@@ -396,7 +400,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
