@@ -157,10 +157,10 @@ class ViewController: UIViewController, WebDelegate, PKPaymentAuthorizationContr
         //Язык платежной страницы:
         sdk.config().setLanguage(language: .ru)
         //Для передачи информации от платежного гейта:
-        sdk.config().setCheckUrl(url: "url")
-        sdk.config().setResultUrl(url: "url")
-        sdk.config().setRefundUrl(url: "url")
-        sdk.config().setClearingUrl(url: "url")
+        sdk.config().setCheckUrl(url: "https://yoursite.kz")
+        sdk.config().setResultUrl(url: "https://yoursite.kz")
+        sdk.config().setRefundUrl(url: "https://yoursite.kz")
+        sdk.config().setClearingUrl(url: "https://yoursite.kz")
         sdk.config().setRequestMethod(requestMethod: .POST)
         
         //Для отображения Frame вместо платежной страницы
@@ -288,18 +288,24 @@ class ViewController: UIViewController, WebDelegate, PKPaymentAuthorizationContr
         
         sdk.createApplePayment(amount: amount, description: description, orderId: orderId, userId: userId, extraParams: nil) {
                     paymentId, error in {
-                        self.sdk.confirmApplePayment(paymentId: paymentId ?? "", tokenData: tokenData) {
-                            confirmPayment, confirmError in {
-                                if let directError = confirmError {
-                                    completion(PKPaymentAuthorizationResult(status: .failure, errors: nil))
-                                
-                                    self.resultLabel.text = "Error: \(directError.errorCode) \(directError.description)"
-                                } else if let directPay = confirmPayment {
-                                    completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
-                                    
-                                    self.resultLabel.text = "PaymentID: \(directPay.paymentId ?? 0) \(directPay.status ?? "nil")"
-                                }
-                            }()
+                        if let createError = error {
+                            completion(PKPaymentAuthorizationResult(status: .failure, errors: nil))
+                            
+                            self.resultLabel.text = "Error: \(createError.errorCode) \(createError.description)"
+                        } else if let paymentId = paymentId {
+                            self.sdk.confirmApplePayment(paymentId: paymentId, tokenData: Data()) {
+                                confirmPayment, confirmError in {
+                                    if let confirmError = confirmError {
+                                        completion(PKPaymentAuthorizationResult(status: .failure, errors: nil))
+                                        
+                                        self.resultLabel.text = "Error: \(confirmError.errorCode) \(confirmError.description)"
+                                    } else if let confirmPayment = confirmPayment {
+                                        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+                                        
+                                        self.resultLabel.text = "PaymentID: \(confirmPayment.paymentId ?? 0) \(confirmPayment.status ?? "nil")"
+                                    }
+                                }()
+                            }
                         }
                     }()
             }
