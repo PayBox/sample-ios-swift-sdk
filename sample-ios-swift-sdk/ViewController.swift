@@ -293,7 +293,7 @@ class ViewController: UIViewController, WebDelegate, PKPaymentAuthorizationContr
                             
                             self.resultLabel.text = "Error: \(createError.errorCode) \(createError.description)"
                         } else if let paymentId = paymentId {
-                            self.sdk.confirmApplePayment(paymentId: paymentId, tokenData: Data()) {
+                            self.sdk.confirmApplePayment(paymentId: paymentId, tokenData: tokenData) {
                                 confirmPayment, confirmError in {
                                     if let confirmError = confirmError {
                                         completion(PKPaymentAuthorizationResult(status: .failure, errors: nil))

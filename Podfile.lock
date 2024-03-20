@@ -1,5 +1,5 @@
 PODS:
-  - PayBoxSdk (1.1.1)
+  - PayBoxSdk (1.1.2)
 
 DEPENDENCIES:
   - PayBoxSdk (from `https://github.com/PayBox/SDK_iOS-input-.git`)
@@ -11,12 +11,12 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   PayBoxSdk:
-    :commit: 69193d84d563c8c19cfbd042ba6e1abdd1d58eb9
+    :commit: ef8ecac27379969932f5e9c1966aa8d73002a011
     :git: https://github.com/PayBox/SDK_iOS-input-.git
     :submodules: true
 
 SPEC CHECKSUMS:
-  PayBoxSdk: 241c9b3eb8b2e8a6058470704940532e4b068f45
+  PayBoxSdk: d38cb827a5a170422782dc97c502a1e79f2e1cdb
 
 PODFILE CHECKSUM: 02567fb72a2e1706584fd35caa0867668a3d90db
 
